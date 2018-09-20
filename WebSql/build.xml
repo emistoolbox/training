@@ -1,0 +1,65 @@
+<project name="websql" default="compile" basedir=".">
+  <description>html-api-sql</description>
+
+  <property name="src" location="src" />
+  <property name="resources" location="resources" />
+  <property name="lib" location="${resources}/WEB-INF/lib" />
+  <property name="lib.build" location="lib.build" />
+  <property name="jar" location="jar" />
+  <property name="build" location="build" />
+  <property name="classes" location="${resources}/WEB-INF/classes" />
+ 
+
+  <path id="path.compile">
+    <fileset dir="${lib}">
+      <include name="**/*.jar"/>
+    </fileset>
+
+    <fileset dir="${lib.build}">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+
+  
+  <target name="compile">  
+    <javac srcdir="${src}" destdir="${classes}" debug="on">
+      <classpath refid="path.compile"/>
+    </javac>
+  </target>
+
+  <target name="clean">
+    <delete quiet="true" includeemptydirs="true">
+      <fileset dir="${classes}" includes="**/*"/>
+
+      <fileset dir="${build}" includes="**/*"/>
+    </delete>
+
+    <mkdir dir="${build}"/>
+    <mkdir dir="${classes}"/>
+
+    
+  </target>
+
+
+  <target name="prepareWar" depends="compile">
+    <delete quiet="true" includeemptydirs="true">
+      <fileset dir="${jar}" includes="**/*.bak"/>
+      <fileset dir="${jar}" includes="**/*~"/>
+    </delete>
+  </target>
+
+  <target name="war" depends="clean,prepareWar">
+    <delete file="${build}/${ant.project.name}.war"/>
+    <war destfile="${build}/${ant.project.name}.war" webxml="${resources}/WEB-INF/web.xml">
+      <fileset dir="${resources}">
+        <exclude name="**/*.bak"/>
+        <exclude name="**/*~"/>
+        <exclude name="WEB-INF/web.xml"/>
+      </fileset>
+      <classes dir="${jar}" />
+    </war>
+  </target>
+
+  <target name="all" depends="clean,war">
+  </target>
+</project>

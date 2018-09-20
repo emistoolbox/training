@@ -1,0 +1,11 @@
+<Context>
+
+    <Resource name="jdbc/testdb" auth="Container" type="javax.sql.DataSource"
+                driverClassName="com.mysql.jdbc.Driver"
+               maxActive="100" maxIdle="30" maxWait="10000"
+               username="testuser" password="littleballoffur" 
+               alternateUsernameAllowed="true"
+               factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+               url="jdbc:mysql://localhost:3306/ebookshop" />               
+</Context>
+
