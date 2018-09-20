@@ -36,8 +36,7 @@
 
     <mkdir dir="${build}"/>
     <mkdir dir="${classes}"/>
-
-    
+    <mkdir dir="${jar}"/>
   </target>
 
 
