@@ -1,11 +1,6 @@
 <Context>
-
-    <Resource name="jdbc/testdb" auth="Container" type="javax.sql.DataSource"
-                driverClassName="com.mysql.jdbc.Driver"
-               maxActive="100" maxIdle="30" maxWait="10000"
-               username="testuser" password="littleballoffur" 
-               alternateUsernameAllowed="true"
-               factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-               url="jdbc:mysql://localhost:3306/ebookshop" />               
+    <Environment name="dburl" value="jdbc:mysql://localhost:3306/"  type="java.lang.String" override="false"/>               
+    <Environment name="table_testuser" value="ebookshop"  type="java.lang.String" override="false"/>                     
+    <Environment name="table_user2" value="testtable"  type="java.lang.String" override="false"/>                         
 </Context>
 
