@@ -19,9 +19,9 @@ Value is directly the name of the database
 
 - Add the user(s) in {CATALINA_HOME}/conf/tomcat-user.xml
 By defatul the application expect role 'websqlrole' and need to be passed via Basic HTTP Authentication. Then you need to add a line like 
-
+```
   <user username="testuser" password="test"  roles="websqlrole"/>
-
+```
 
 ## Use
 The web page that make use of the API is located in:
