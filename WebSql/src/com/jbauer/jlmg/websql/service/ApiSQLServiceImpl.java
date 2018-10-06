@@ -81,6 +81,7 @@ public class ApiSQLServiceImpl implements ApiSQLService {
                 warning = warning.getNextWarning();
             }
             
+            boolean limit = false;
             if (rs != null){
                 ResultSetMetaData metadata = rs.getMetaData();
                 int columnCount = metadata.getColumnCount();    
@@ -89,12 +90,14 @@ public class ApiSQLServiceImpl implements ApiSQLService {
                 }
                 results.setHeaders(tableHeaders);
             
-                while (rs.next()) {
+                while ((rs.next())&&(!limit)) {
                     ArrayList<String> l= new ArrayList<String>();
                     for (int i = 1; i <= columnCount; i++) {
                         l.add(rs.getString(i));
                     }
                     rows.add(l);
+                    if (rows.size()>199)
+                        limit = true;
                 }
                 results.setRows(rows);
             }
