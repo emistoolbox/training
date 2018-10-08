@@ -33,6 +33,8 @@ public class ApiSQLServiceImpl implements ApiSQLService {
     public Response sql(@javax.ws.rs.core.Context HttpHeaders headers, QueryBody body) {
         QueryResults results = new QueryResults();
         Statement stmt = null;
+        Connection conn = null;
+
         ArrayList<String> tableHeaders = new ArrayList<String>();
         ArrayList<List<String>> rows = new ArrayList<List<String>>();
         ArrayList<String> logs = new ArrayList<String>();
@@ -50,7 +52,7 @@ public class ApiSQLServiceImpl implements ApiSQLService {
             
             InitialContext ic = new InitialContext();
             Context xmlContext = (Context) ic.lookup("java:comp/env");
-            Connection conn;
+
 /*            DataSource ds = (DataSource) xmlContext.lookup("jdbc/testdb");
             
             if ((Strings.isNullOrEmpty(body.getUser()))||(Strings.isNullOrEmpty(body.getPassword()))){
@@ -64,8 +66,6 @@ public class ApiSQLServiceImpl implements ApiSQLService {
             Class.forName("com.mysql.jdbc.Driver");
         
             conn = DriverManager.getConnection(dburl+table, user, pwd);
-            
-
             stmt = conn.createStatement();
             
             
@@ -110,12 +110,14 @@ public class ApiSQLServiceImpl implements ApiSQLService {
             return Response.ok(results).build();
         } finally {
             if (stmt != null) {
-                try{ stmt.close();}catch(Exception e){};
+                try { stmt.close(); } catch (Exception e) {};
+            }
+            
+            if (conn != null) {
+                try { conn.close(); } catch (Exception ex) {}; 
             }
         }
         results.setLog(logs);
         return Response.ok(results).build();
     }
-
-
 }
